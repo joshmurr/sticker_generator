@@ -10,3 +10,5 @@ A program which takes a word as an input and then does the following:
 6. Places the image onto a sticker sheet, and when the sheet is full, prints the page (by saving it in a folder which has a "Send to Print" action applied to it using Apple Automator).
 
 Still a work in progress, and in need of better documentation.
+
+All stickers made so far can be seen on the [Sticker Wall](http://stickerwall.tumblr.com/).
