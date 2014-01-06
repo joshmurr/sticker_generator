@@ -1,22 +1,16 @@
 class Print {
   ArrayList<PImage> printArray = new ArrayList<PImage>();
   String name = str(floor(random(1000)))+".pdf";
-  PGraphics printPage = createGraphics(840, 1188, PDF, name); //A4 * 4
-  int cols, rows, originalSize, sizeY, sizeX, numStickers, buffer;
-  int spacer = 52; //13mm
-  int top = 28, bottom = 12; //7mm 3mm - Difference between print area, and sticker area
-  int left = 8; //2mm
+  PGraphics printPage = createGraphics(860, 1151, PDF, name); //PRINT AREA: MM > PX
+  int cols, rows, sizeY, sizeX, numStickers;
+  int dividerHori = 290, dividerVert = 294;
 
-  Print(int originalSize_, int cols_, int rows_) {
-    originalSize = originalSize_;
-    println("Original Size: " + originalSize);
+  Print(int cols_, int rows_, int sizeX_, int sizeY_) {
     cols = cols_;
     rows = rows_;
     numStickers = cols * rows;
-    sizeY = (printPage.height - top - bottom)/rows;
-    println("New size: " + sizeY);
-    sizeX = (printPage.width - left)/cols;
-    buffer = printPage.width/cols;
+    sizeX = sizeX_;
+    sizeY = sizeY_;
   }
 
   void addToPrintPage(PImage img) {
@@ -38,16 +32,19 @@ class Print {
   void makePageForPrint() {
     printPage.beginDraw(); 
     for (int i=0; i<numStickers; i++) {
-      PImage stickerResize = printArray.get(i).get();
-      //stickerResize.resize(0, sizeY);
+      PImage sticker = printArray.get(i).get();
+      //Do no resize anything now, it fucks the print quality.
       if (i>=rows*2) {
-        printPage.image(stickerResize, (2.5*buffer)-sizeX/2, (sizeY*(i%rows))+top);
+        //RIGHT
+        printPage.image(sticker, (printPage.width/2)-(sizeX/2)+dividerHori, (dividerVert*(i%rows)));
       } 
       else if (i>=rows) {
-        printPage.image(stickerResize, (1.5*buffer)-sizeX/2, (sizeY*(i%rows))+top);
+        //MIDDLE
+        printPage.image(sticker, (printPage.width/2)-sizeX/2, (dividerVert*(i%rows)));
       } 
       else {
-        printPage.image(stickerResize, (0.5*buffer)-sizeX/2, (sizeY*i)+top);
+        //LEFT
+        printPage.image(sticker, (printPage.width/2)-(sizeX/2)-dividerHori, (dividerVert*i));
       }
     }
     printPage.dispose();

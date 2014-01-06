@@ -18,16 +18,16 @@ Print print;
 int setColour = 0;
 int textColour = 0;
 int pgSize = 200;
-int pgX = 256, pgY = 136;
-//int pgX = 200, pgY = 200;
+//int pgX = 256, pgY = 136;
+int pgX = 273, pgY = 273; //(+19)
 color textColourDisplay;
 
 void setup() {
-  size(1000, 600);
+  size(1200, 800);
   frame.setResizable(true);
   Andale = createFont("AndaleMono", 10, false);
-  gallery = new Gallery(700, 30);
-  print = new Print(pgY, 3, 8);
+  gallery = new Gallery(700, 30, pgX, pgY, 2);
+  print = new Print(pgY, 3, 4, pgX, pgY);
   textColourDisplay = color(0, 0, 0);
   cp5 = new ControlP5(this);
 
@@ -75,7 +75,7 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(100);
   textFont(Andale);
   fill(255);
   text("Sticker Generator v0.1a", 20, 20);

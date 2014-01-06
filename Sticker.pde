@@ -13,11 +13,9 @@ class Sticker {
     textColour = textColour_;
     println("Making Sticker for " + previousSearch);
     img = img_;
-    mask = loadImage("font/rectMaskDither2.png");
+    mask = loadImage("font/finalRoundDither.png");
     img.loadPixels();
     pg.beginDraw();
-    pg.fill(255,0,0);
-    pg.rect(0,0,pgX,pgY);
     
     dither = new Dither(img, currentText.makeImage(textColour), 1, colours, textColour);
 
@@ -59,9 +57,9 @@ class Sticker {
   void saveSticker() {
     // - /Users/joshmurr/desktop/print
     
-    /* DEBUGUGUGUGUGUGUGUGUGUGUGUGUUGUG */
-    print.addToPrintPageDebug(sticker);
-    /* DEBUGUGUGUGUGUGUGUGUGUGUGUGUUGUG */
+    /* ?????????? DEBUGUGUGUGUGUGUGUGUGUGUGUGUUGUG ?????????? */
+    print.addToPrintPage(sticker);
+    /* ?????????? DEBUGUGUGUGUGUGUGUGUGUGUGUGUUGUG ?????????? */
     
     //println("Print Page has: " + print.printPage.size() + " stickers.");
     sticker.save("StickersSmall/"+previousSearch+".png");

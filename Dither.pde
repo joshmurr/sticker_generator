@@ -54,14 +54,14 @@ class Dither {
     textColour = textColour_;
     scale = scale_;
     colours = colours_;
-//    if (img.width < img.height) {
-//      img.resize(pgX, 0);
-//    } 
-//    else {
-//      img.resize(0, pgY);
-//    }
+    if (img.width < img.height) {
+      img.resize(pgX, 0);
+    } 
+    else {
+      img.resize(0, pgY);
+    }
 
-    img.resize(pgX, 0);
+    //img.resize(pgX, 0);
     //ADD TEXT IMAGE:
     if (textColour > 0 && textColour < 52) {
       img.blend(textImg, 0, 0, pgX, pgY, 0, 0, pgX, pgY, BLEND);

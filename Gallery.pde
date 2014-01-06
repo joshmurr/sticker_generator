@@ -1,21 +1,24 @@
 
 class Gallery {
   ArrayList<PImage> gallery = new ArrayList<PImage>();
-  int x, y, xOver2, yOver2;
-  Gallery(int x_, int y_) {
+  int x, y, xSize, ySize, scale, xBuffer, yBuffer;
+  Gallery(int x_, int y_, int xSize_, int ySize_, int scale_) {
     x = x_;
     y = y_;
-    xOver2 = x_/4;
-    yOver2 = y_/4;
+    xSize = xSize_;
+    ySize = ySize_;
+    scale = scale_;
+    xBuffer = xSize/scale;
+    yBuffer = ySize/scale;
   }
 
   void display() {
     for (int i=0; i<gallery.size(); i++) {
       if (i>=5) {
-        image(gallery.get(i), x+xOver2, y+(yOver2*(i%5)));
+        image(gallery.get(i), x+xBuffer, y+(yBuffer*(i%5)));
       } 
       else {
-        image(gallery.get(i), x, y+(yOver2*i));
+        image(gallery.get(i), x, y+(yBuffer*i));
       }
     }
   }
@@ -25,7 +28,7 @@ class Gallery {
       gallery.remove(0);
     }
     PImage temp = newSticker.get();
-    temp.resize(xOver2, 0);
+    temp.resize(xBuffer, 0);
     gallery.add(temp);
   }
 }
