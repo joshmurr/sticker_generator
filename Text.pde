@@ -9,7 +9,7 @@ class Text {
   Text(String text_) {
     text = text_;
     ammendSearch(text);
-    fontList = loadStrings("font/fontList.txt");
+    fontList = loadStrings("bin/fontList.txt");
     thisFont = fontList[floor(random(fontList.length))];
     font = createFont(thisFont, floor(random(32, 72)));
   }

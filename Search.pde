@@ -63,7 +63,6 @@ class Search {
         return;
       }
       previousSearch = searchTerm;
-      searching = false;
       searched = true;
       searchTerm = "";
     }

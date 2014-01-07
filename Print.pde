@@ -1,9 +1,11 @@
 class Print {
   ArrayList<PImage> printArray = new ArrayList<PImage>();
+  String print = "/Users/joshmurr/desktop/print/";
   String name = str(floor(random(1000)))+".pdf";
-  PGraphics printPage = createGraphics(860, 1151, PDF, name); //PRINT AREA: MM > PX
+  PGraphics printPage = createGraphics(860, 1151, PDF, print+name); //PRINT AREA: MM > PX
   int cols, rows, sizeY, sizeX, numStickers;
   int dividerHori = 290, dividerVert = 294;
+  String isPrinting = "";
 
   Print(int cols_, int rows_, int sizeX_, int sizeY_) {
     cols = cols_;
@@ -15,9 +17,11 @@ class Print {
 
   void addToPrintPage(PImage img) {
     if (printArray.size() < numStickers) {
+      isPrinting = "";
       printArray.add(img);
     } 
     else {
+      isPrinting = "Sheet sent to Print";
       makePageForPrint();
     }
   }
@@ -51,6 +55,7 @@ class Print {
     printPage.endDraw();
     //printPage.save("PrintPages/"+floor(random(100))+".png");
     printArray.clear();
+    
     println("==========================");
     println("| Saved a page for Print |");
     println("==========================");

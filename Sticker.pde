@@ -13,7 +13,7 @@ class Sticker {
     textColour = textColour_;
     println("Making Sticker for " + previousSearch);
     img = img_;
-    mask = loadImage("font/finalRoundDither.png");
+    mask = loadImage("bin/finalRoundDither.png");
     img.loadPixels();
     pg.beginDraw();
     

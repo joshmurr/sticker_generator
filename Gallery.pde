@@ -14,7 +14,10 @@ class Gallery {
 
   void display() {
     for (int i=0; i<gallery.size(); i++) {
-      if (i>=5) {
+      if (i>=10) {
+        image(gallery.get(i), x+(xBuffer*2), y+(yBuffer*(i%5)));
+      }
+      else if (i>=5) {
         image(gallery.get(i), x+xBuffer, y+(yBuffer*(i%5)));
       } 
       else {
@@ -24,7 +27,7 @@ class Gallery {
   }
 
   void add(PImage newSticker) {
-    if(gallery.size() >= 10){
+    if (gallery.size() >= 15) {
       gallery.remove(0);
     }
     PImage temp = newSticker.get();
