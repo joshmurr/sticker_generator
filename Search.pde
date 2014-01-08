@@ -14,7 +14,7 @@ class Search {
       return;
     } 
     else {
-      errors = "";
+      
       searchTerm = ammendSearch(searchTerm_);
       previousSearchNonFormat = searchTerm;
       JSONObject response;
@@ -65,6 +65,7 @@ class Search {
       previousSearch = searchTerm;
       searched = true;
       searchTerm = "";
+      errors = "";
     }
   }
 

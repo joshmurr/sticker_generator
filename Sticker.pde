@@ -3,7 +3,6 @@ class Sticker {
   String previousSearch, previousSearchNonFormat;
   PImage img, sticker, mask;
   int colours, textColour;
-  Halftone halftone;
   Dither dither;
 
   Sticker(PImage img_, String prevSrch_, String prevSrchNFrmt_, int colours_, int textColour_) {

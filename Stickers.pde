@@ -5,7 +5,7 @@ import java.io.File;
 ControlP5 cp5;
 CheckBox checkbox, coloursBoxes;
 PFont Andale, stickerFont;
-boolean searched, sticked, random = false;
+boolean searched, sticked, random, automated = false;
 String currentSearchTerm = "";
 String errors = "";
 String[] randomWords;
@@ -16,13 +16,16 @@ Text currentText;
 Gallery gallery;
 Print print;
 
-int infoAlpha = 255;
+int automateCount = 13;
+
+int infoFill = 0;
+String info = "The software is reasonably stable, but not perfect. It requires an internet connection, so if there a long periods where nothing seems to happen, it may because the internet connection has been lost.\nThe source code is available here: https://github.com/joshmurr/sticker_generator\nIf it does freeze, close (ESC) and re-run (press the PLAY button in Processing).";
 
 int setColour = 0;
 int textColour = 0;
 int pgSize = 200;
 //int pgX = 256, pgY = 136;
-int pgX = 273, pgY = 273; //(+19)
+int pgX = 273, pgY = 273;
 color textColourDisplay;
 
 void setup() {
@@ -61,6 +64,12 @@ void setup() {
         .setTriggerEvent(Bang.RELEASE)
           .setLabel("Make Sticker");
 
+  cp5.addBang("automate")
+    .setPosition(20, 550)
+      .setSize(200, 13)
+        .setTriggerEvent(Bang.RELEASE)
+          .setLabel("Automate");
+
   cp5.addBang("info")
     .setPosition(20, 580)
       .setSize(13, 13)
@@ -94,22 +103,19 @@ void draw() {
   background(0);
   textFont(Andale);
   fill(255);
-  text("Sticker Generator v0.1a", 20, 20);
-  text("by Josh Murr", 20, 37);
+  text("Sticker Generator v0.1a\nby Josh Murr", 20, 20);
   text("— Press Enter", 56, 75);
   fill(255, 0, 0);
-  text(errors, 20, 560, 200, 140); /////
+  text(errors, 20, 530, 200, 140);
   noStroke();
   fill(textColourDisplay);
   rect(20, 170, 200, 10);
   fill(255);
   text("Text Colour:", 120, 150);
   fill(255, 0, 0);
-  text(print.isPrinting, 300, 550);
-  fill(255);
-  text("Make sure you have an internet connection", 20, 615, 220, 680);
-  fill(0, infoAlpha);
-  rect(20, 615, 200, 100);
+  text(print.isPrinting, 300, 560);
+  fill(infoFill);
+  text(info, 20, 615, 700, 680);
   fill(255);
   if (searched) {
     pg = createGraphics(pgX, pgY);
@@ -117,6 +123,9 @@ void draw() {
     image(currentSearch.img, 20, 225, currentSearch.neww, currentSearch.newh);
     text(currentText.getFont(), 20, 450);
     currentText.display(20, 470);
+    if (automated) {
+      makeSticker();
+    }
   }
   if (sticked) {
     PImage display = currentSticker.sticker.get();
@@ -128,17 +137,28 @@ void draw() {
     image(display, 300, 50);
   }
   gallery.display();
+  if (automated) {
+    automateCount--;
+    if (automateCount > 0) {
+      automate();
+    } 
+    else {
+      //Now 12 becuase there is a sticker already in the printArray
+      automateCount = 12;
+      automated = false;
+    }
+  }
 }
 
 public void search(String searchValue_) {
   currentSearchTerm = searchValue_;
-  random = true;
   currentSearch = new Search(searchValue_);
   currentText = new Text(searchValue_);
   println("Searching for " + searchValue_);
 }
 
 public void randomSearch() {
+  random = true;
   currentSearchTerm = randomWords[floor(random(randomWords.length))];
   coloursBoxes.toggle(round(random(2)));
   checkbox.toggle(round(random(1)));
@@ -159,6 +179,16 @@ public void research() {
   }
 }
 
+public void automate() {
+  currentSearchTerm = randomWords[floor(random(randomWords.length))];
+  coloursBoxes.toggle(round(random(2)));
+  checkbox.toggle(round(random(1)));
+  currentSearch = new Search(currentSearchTerm);
+  currentText = new Text(currentSearchTerm);
+  automated = true;
+  println("Searching for " + currentSearchTerm);
+}
+
 public void makeSticker() {
   if (searched) {
     currentSticker = new Sticker(currentSearch.img, currentSearch.previousSearch, currentSearch.previousSearchNonFormat, setColour, textColour);
@@ -170,8 +200,8 @@ public void makeSticker() {
 }
 
 public void info() {
-  if (infoAlpha == 255) infoAlpha = 0;
-  else infoAlpha = 255;
+  if (infoFill == 255) infoFill = 0;
+  else infoFill = 255;
 }
 
 void controlEvent(ControlEvent theEvent) {

@@ -58,7 +58,22 @@ class Dither {
       img.resize(pgX, 0);
     } 
     else {
-      img.resize(0, pgY);
+      try {
+        img.resize(0, pgY);
+      } 
+      catch (Exception e) {
+        errors = "Image error";
+        PImage newImg = createImage(pgX, pgY, RGB);
+        newImg.loadPixels();
+        int rr = (random(1) < 0.5) ? 0 : 255;
+        int rg = (random(1) < 0.5) ? 0 : 255;
+        int rb = (random(1) < 0.5) ? 0 : 255;
+        for (int p=0; p<newImg.pixels.length; p++) {
+          newImg.pixels[p] = color(rr, rg, rb);
+        }
+        newImg.updatePixels();
+        img = newImg.get();
+      }
     }
 
     //img.resize(pgX, 0);
@@ -135,7 +150,7 @@ class Dither {
     }
 
     img.updatePixels();
-    if(colours == 0 && textColour > 0 && textColour < 52){
+    if (colours == 0 && textColour > 0 && textColour < 52) {
       img.blend(textImg, 0, 0, pgX, pgY, 0, 0, pgX, pgY, BLEND);
     }
     return img;
